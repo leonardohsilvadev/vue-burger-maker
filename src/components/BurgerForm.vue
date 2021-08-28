@@ -9,20 +9,22 @@
         <div class="input-container">
          <label for="bread">Choose the bread</label>
          <select name="bread" v-model="bread">
+           <option :key="bread.id" v-for="bread in breads">{{ bread.tipo }}</option>
          </select>
        </div>
 
         <div class="input-container">
          <label for="meat">Choose the meat</label>
          <select name="meat" v-model="meat">
+           <option :key="meat.id" v-for="meat in meats">{{ meat.tipo }}</option>
          </select>
        </div>
 
        <div id="optionals-container" class="input-container">
          <label id="optionals-title" for="optionals">Choose the optionals</label>
-         <div class="checkbox-container">
-           <input type="checkbox" name="optionals" v-model="optionals" value="mayo" />
-           <span>mayo</span>
+         <div :key="optional.id" v-for="optional in optionals" class="checkbox-container">
+           <input type="checkbox" :name="optional.tipo" v-model="selectedOptionals" :value="optional.tipo" />
+           <span>{{ optional.tipo }}</span>
          </div>
 
          <div class="input-container">
@@ -34,8 +36,39 @@
 </template>
 
 <script>
+import { api } from '../utils/api'
+
 export default {
-  name: 'BurgerForm'
+  name: 'BurgerForm',
+  data() {
+    return {
+      breads: [],
+      meats: [],
+      optionals: [],
+      name: '',
+      bread:'',
+      meat: '',
+      selectedOptionals: []
+    }
+  },
+    methods: {
+    async getIngredients() {
+      await api
+        .get('ingredientes')
+        .then(({ data: { carnes, opcionais, paes } }) => {
+          console.log('carnes: ', carnes);
+          console.log('opcionais: ', opcionais);
+          console.log('paes: ', paes);
+          this.breads = paes;
+          this.meats = carnes;
+          this.optionals = opcionais;
+          })
+        .catch(err => console.log('err: ', err))
+    }
+  },
+  mounted() {
+    this.getIngredients()
+  }
 }
 </script>
 
