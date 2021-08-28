@@ -26,6 +26,7 @@ export default {
 
  #nav a {
    color: #FCBA03;
+   font-size: 2rem;
    text-decoration: none;
    margin: 0.75rem;
    transition: 0.5s;
@@ -36,7 +37,7 @@ export default {
  }
 
  #logo {
-   width: 2.5rem;
-   height: 2.5rem;
+   width: 5rem;
+   height: 5rem;
  }
 </style>
