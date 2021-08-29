@@ -1,105 +1,138 @@
 {
-  "ingredientes": {
-    "paes": [
+  "ingredients": {
+    "breads": [
       {
         "id": 1,
-        "tipo": "Italiano Branco"
+        "type": "Italiano Branco"
       },
       {
         "id": 2,
-        "tipo": "3 Queijos"
+        "type": "3 Queijos"
       },
       {
         "id": 3,
-        "tipo": "Parmesão e Orégano"
+        "type": "Parmesão e Orégano"
       },
       {
         "id": 4,
-        "tipo": "Integral"
+        "type": "Integral"
       }
     ],
-    "carnes": [
+    "meats": [
       {
         "id": 1,
-        "tipo": "Maminha"
+        "type": "Maminha"
       },
       {
         "id": 2,
-        "tipo": "Alcatra"
+        "type": "Alcatra"
       },
       {
         "id": 3,
-        "tipo": "Picanha"
+        "type": "Picanha"
       },
       {
         "id": 4,
-        "tipo": "Veggie burger"
+        "type": "Veggie burger"
       }
     ],
-    "opcionais": [
+    "optionals": [
       {
         "id": 1,
-        "tipo": "Bacon"
+        "type": "Bacon"
       },
       {
         "id": 2,
-        "tipo": "Cheddar"
+        "type": "Cheddar"
       },
       {
         "id": 3,
-        "tipo": "Salame"
+        "type": "Salame"
       },
       {
         "id": 4,
-        "tipo": "Tomate"
+        "type": "Tomate"
       },
       {
         "id": 4,
-        "tipo": "Cebola roxa"
+        "type": "Cebola roxa"
       },
       {
         "id": 4,
-        "tipo": "Pepino"
+        "type": "Pepino"
       }
     ]
   },
   "status": [
     {
       "id": 1,
-      "tipo": "Solicitado"
+      "type": "Solicitado"
     },
     {
       "id": 2,
-      "tipo": "Em produção"
+      "type": "Em produção"
     },
     {
       "id": 3,
-      "tipo": "Finalizado"
+      "type": "Finalizado"
     }
   ],
   "burgers": [
     {
-      "nome": "Matheus Battisti",
-      "carne": "Picanha",
-      "pao": "Italiano Branco",
-      "opcionais": [
+      "name": "Matheus Battisti",
+      "meat": "Picanha",
+      "bread": "Italiano Branco",
+      "optionals": [
         "Bacon",
         "Salame",
         "Cebola roxa"
       ],
-      "status": "Finalizado",
+      "status": "Finished",
       "id": 1
     },
     {
-      "nome": "João Coelho",
-      "carne": "Maminha",
-      "pao": "3 Queijos",
-      "opcionais": [
+      "name": "João Coelho",
+      "meat": "Maminha",
+      "bread": "3 Queijos",
+      "optionals": [
         "Salame",
         "Cebola roxa"
       ],
-      "status": "Solicitado",
+      "status": "Requested",
       "id": 4
+    },
+    {
+      "name": "Carlos",
+      "meat": "Maminha",
+      "bread": "Integral",
+      "optionals": [
+        "Bacon",
+        "Pepino"
+      ],
+      "status": "Requested",
+      "id": 5
+    },
+    {
+      "name": "Fabio",
+      "meat": "Veggie burger",
+      "bread": "Parmesão e Orégano",
+      "optionals": [
+        "Bacon",
+        "Cheddar"
+      ],
+      "status": "Requested",
+      "id": 6
+    },
+    {
+      "name": "Junior",
+      "meat": "Maminha",
+      "bread": "Parmesão e Orégano",
+      "optionals": [
+        "Bacon",
+        "Cheddar"
+      ],
+      "status": "Requested",
+      "id": 7
     }
   ]
 }

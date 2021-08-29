@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form id="form">
+    <form id="form" @submit="handleAddBurger">
        <div class="input-container">
          <label for="name">Name</label>
          <input type="text" name="name" v-model="name" placeholder="enter your name" />
@@ -9,22 +9,22 @@
         <div class="input-container">
          <label for="bread">Choose the bread</label>
          <select name="bread" v-model="bread">
-           <option :key="bread.id" v-for="bread in breads">{{ bread.tipo }}</option>
+           <option :key="bread.id" v-for="bread in breads">{{ bread.type }}</option>
          </select>
        </div>
 
         <div class="input-container">
          <label for="meat">Choose the meat</label>
          <select name="meat" v-model="meat">
-           <option :key="meat.id" v-for="meat in meats">{{ meat.tipo }}</option>
+           <option :key="meat.id" v-for="meat in meats">{{ meat.type }}</option>
          </select>
        </div>
 
        <div id="optionals-container" class="input-container">
          <label id="optionals-title" for="optionals">Choose the optionals</label>
-         <div :key="optional.id" v-for="optional in optionals" class="checkbox-container">
-           <input type="checkbox" :name="optional.tipo" v-model="selectedOptionals" :value="optional.tipo" />
-           <span>{{ optional.tipo }}</span>
+         <div :key="optional.id" v-for="(optional, index) in optionals" class="checkbox-container" @click="handleCheckOptional(index)">
+           <input type="checkbox" :name="optional.type" :value="optional.type" :checked="optional.checked" />
+           <span>{{ optional.type }}</span>
          </div>
 
          <div class="input-container">
@@ -48,22 +48,44 @@ export default {
       name: '',
       bread:'',
       meat: '',
-      selectedOptionals: []
     }
   },
     methods: {
     async getIngredients() {
+      const url = 'ingredients'
+
       await api
-        .get('ingredientes')
-        .then(({ data: { carnes, opcionais, paes } }) => {
-          console.log('carnes: ', carnes);
-          console.log('opcionais: ', opcionais);
-          console.log('paes: ', paes);
-          this.breads = paes;
-          this.meats = carnes;
-          this.optionals = opcionais;
+        .get(url)
+        .then(({ data: { meats, optionals, breads } }) => {
+          this.breads = breads;
+          this.meats = meats;
+          this.optionals = optionals.map(o => ({ ...o, checked: false }))
           })
         .catch(err => console.log('err: ', err))
+    },
+    async handleAddBurger(e) {
+      e.preventDefault();
+      const url = 'burgers'
+      const data = {
+        name: this.name,
+        meat: this.meat,
+        bread: this.bread,
+        optionals: this.optionals.filter(({ checked }) => checked).map(({ type }) => type),
+        status: 'Requested'
+      }
+
+      await api
+        .post(url, data)
+        .then(() => {
+          this.name = ''
+          this.bread = ''
+          this.meat = ''
+          this.optionals = this.optionals.map(o => ({ ...o, checked: false }))
+        })
+        .catch(err => console.log('err: ', err))
+    },
+    handleCheckOptional(index) {
+      this.optionals[index].checked = !this.optionals[index].checked
     }
   },
   mounted() {
