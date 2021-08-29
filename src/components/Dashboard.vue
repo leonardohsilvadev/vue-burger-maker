@@ -24,7 +24,14 @@
         </div>
         <div>
           <select name="status" class="status">
-            <option :key="s.id" v-for="s in status">{{ s.type }}</option>
+            <option
+              :key="s.id"
+              v-for="s in status"
+              value="s.type"
+              :selected="getSelectedStatus(s.type, order.status)"
+            >
+              {{ s.type }}
+            </option>
           </select>
           <button class="delete-btn">Cancel</button>
         </div>
@@ -64,6 +71,9 @@ export default {
           console.log('data: ', data)
           this.status = data
         })
+    },
+    getSelectedStatus(type, status) {
+      return type === status
     }
   },
   mounted() {
