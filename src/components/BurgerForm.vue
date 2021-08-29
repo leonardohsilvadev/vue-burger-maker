@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Message v-show="message" :message="message" />
     <form id="form" @submit="handleAddBurger">
        <div class="input-container">
          <label for="name">Name</label>
@@ -36,10 +37,14 @@
 </template>
 
 <script>
+import Message from './Message.vue'
 import { api } from '../utils/api'
 
 export default {
   name: 'BurgerForm',
+  components: {
+    Message
+  },
   data() {
     return {
       breads: [],
@@ -48,6 +53,7 @@ export default {
       name: '',
       bread:'',
       meat: '',
+      message: ''
     }
   },
     methods: {
@@ -81,11 +87,18 @@ export default {
           this.bread = ''
           this.meat = ''
           this.optionals = this.optionals.map(o => ({ ...o, checked: false }))
+          this.handleSuccessMessage()
         })
         .catch(err => console.log('err: ', err))
     },
     handleCheckOptional(index) {
       this.optionals[index].checked = !this.optionals[index].checked
+    },
+    handleSuccessMessage() {
+      this.message = 'Order successfully placed'
+      setTimeout(() => {
+        this.message = ''
+      }, 3000)
     }
   },
   mounted() {
