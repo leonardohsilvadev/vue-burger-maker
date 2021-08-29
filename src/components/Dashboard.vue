@@ -1,5 +1,5 @@
 <template>
-  <div id="burger-table">
+  <div :key="order.id" v-for="order in orders" id="burger-table">
     <div>
       <div id="burger-table-heading">
         <div class="order-id">#</div>
@@ -13,18 +13,18 @@
 
     <div id="burger-table-rows">
       <div class="burger-table-row">
-        <div class="order-number">1</div>
-        <div>Fabio</div>
-        <div>Australiano</div>
-        <div>Picanha</div>
+        <div class="order-number">{{ order.id }}</div>
+        <div>{{ order.name }}</div>
+        <div>{{ order.bread }}</div>
+        <div>{{ order.meat }}</div>
         <div>
           <ul>
-            <li>Cheddar</li>
-            <li>Maionese</li>
+            <li :key="index" v-for="(optional, index) in order.optionals">{{ optional }}</li>
           </ul>
         </div>
         <div>
           <select name="status" class="status">
+            <option :key="s.id" v-for="s in status">{{ s.type }}</option>
           </select>
           <button class="delete-btn">Cancel</button>
         </div>
@@ -34,8 +34,42 @@
 </template>
 
 <script>
+import { api } from '../utils/api'
+
 export default {
-  name: 'Dashboard'
+  name: 'Dashboard',
+  data() {
+    return {
+      orders: [],
+      status: []
+    }
+  },
+  methods: {
+    async getBurgers() {
+      const url = 'burgers'
+
+      await api
+        .get(url)
+        .then(({ data }) => {
+          console.log('data: ', data)
+          this.orders = data
+        })
+    },
+    async getStatus() {
+      const url = 'status'
+
+      await api
+        .get(url)
+        .then(({ data }) => {
+          console.log('data: ', data)
+          this.status = data
+        })
+    }
+  },
+  mounted() {
+    this.getBurgers()
+    this.getStatus()
+  }
 }
 </script>
 
@@ -49,6 +83,7 @@ export default {
   #burger-table-rows,
   .burger-table-row {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
   }
 
@@ -75,7 +110,7 @@ export default {
   }
 
   select {
-    padding: 1rem 3.25rem;
+    padding: 1rem 0.75rem;
     margin-right: 0.75rem;
   }
 
