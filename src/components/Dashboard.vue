@@ -23,11 +23,15 @@
           </ul>
         </div>
         <div>
-          <select name="status" class="status">
+          <select
+            name="status"
+            class="status"
+            @change="handleChangeOrderStatus(order.id, $event.target.value)"
+          >
             <option
               :key="s.id"
               v-for="s in status"
-              value="s.type"
+              :value="s.type"
               :selected="getSelectedStatus(s.type, order.status)"
             >
               {{ s.type }}
@@ -66,6 +70,17 @@ export default {
       await api
         .get(url)
         .then(({ data }) => this.status = data)
+        .catch(err => console.log('err: ', err))
+    },
+    async handleChangeOrderStatus(id, status) {
+      const url = `burgers/${id}`
+      const data = {
+        status
+      }
+
+      await api
+        .patch(url, data)
+        .then(() => this.getOrders())
         .catch(err => console.log('err: ', err))
     },
     async handleDeleteOrder(id) {
