@@ -91,17 +91,6 @@
       "id": 1
     },
     {
-      "name": "João Coelho",
-      "meat": "Maminha",
-      "bread": "3 Queijos",
-      "optionals": [
-        "Salame",
-        "Cebola roxa"
-      ],
-      "status": "Requested",
-      "id": 4
-    },
-    {
       "name": "Carlos",
       "meat": "Maminha",
       "bread": "Integral",

@@ -1,4 +1,5 @@
 <template>
+  <Message v-show="message" :message="message" />
   <div :key="order.id" v-for="order in orders" id="burger-table">
     <div>
       <div id="burger-table-heading">
@@ -45,14 +46,20 @@
 </template>
 
 <script>
+import Message from './Message.vue'
+
 import { api } from '../utils/api'
 
 export default {
   name: 'Dashboard',
+  components: {
+    Message
+  },
   data() {
     return {
       orders: [],
-      status: []
+      status: [],
+      message: ''
     }
   },
   methods: {
@@ -80,7 +87,10 @@ export default {
 
       await api
         .patch(url, data)
-        .then(() => this.getOrders())
+        .then(() => {
+          this.handleMessage(`Order ${id} status succesfully updated!`)
+          this.getOrders()
+          })
         .catch(err => console.log('err: ', err))
     },
     async handleDeleteOrder(id) {
@@ -88,11 +98,20 @@ export default {
 
       await api
         .delete(url)
-        .then(() => this.getOrders())
+        .then(() => {
+          this.handleMessage(`Order ${id} succesfully canceled!`)
+          this.getOrders()
+          })
         .catch(err => console.log('err: ', err))
     },
     getSelectedStatus(type, status) {
       return type === status
+    },
+    handleMessage(text) {
+      this.message = text
+      setTimeout(() => {
+        this.message = ''
+      }, 3000)
     }
   },
   mounted() {

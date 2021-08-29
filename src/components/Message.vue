@@ -22,5 +22,7 @@ export default {
     padding: 0.625rem;
     max-width: 25rem;
     margin: 1.875rem auto;
+    display: flex;
+    justify-content: center;
  }
 </style>
