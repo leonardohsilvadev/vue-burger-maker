@@ -122,17 +122,6 @@
       ],
       "status": "Requested",
       "id": 6
-    },
-    {
-      "name": "Junior",
-      "meat": "Maminha",
-      "bread": "Parmesão e Orégano",
-      "optionals": [
-        "Bacon",
-        "Cheddar"
-      ],
-      "status": "Requested",
-      "id": 7
     }
   ]
 }

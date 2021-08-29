@@ -33,7 +33,7 @@
               {{ s.type }}
             </option>
           </select>
-          <button class="delete-btn">Cancel</button>
+          <button class="delete-btn" @click="handleDeleteOrder(order.id)">Cancel</button>
         </div>
       </div>
     </div>
@@ -52,32 +52,36 @@ export default {
     }
   },
   methods: {
-    async getBurgers() {
+    async getOrders() {
       const url = 'burgers'
 
       await api
         .get(url)
-        .then(({ data }) => {
-          console.log('data: ', data)
-          this.orders = data
-        })
+        .then(({ data }) => this.orders = data)
+        .catch(err => console.log('err: ', err))
     },
     async getStatus() {
       const url = 'status'
 
       await api
         .get(url)
-        .then(({ data }) => {
-          console.log('data: ', data)
-          this.status = data
-        })
+        .then(({ data }) => this.status = data)
+        .catch(err => console.log('err: ', err))
+    },
+    async handleDeleteOrder(id) {
+      const url = `burgers/${id}`
+
+      await api
+        .delete(url)
+        .then(() => this.getOrders())
+        .catch(err => console.log('err: ', err))
     },
     getSelectedStatus(type, status) {
       return type === status
     }
   },
   mounted() {
-    this.getBurgers()
+    this.getOrders()
     this.getStatus()
   }
 }
